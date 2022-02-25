@@ -1,6 +1,5 @@
 package com.cos.blog.test;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,11 +22,7 @@ public class Member {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-	}
-	
-	
-	
-	
+	}	
 }
 
 //@Getter
