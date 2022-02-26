@@ -4,8 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 //@AllArgsConstructor //lombokTest1
+@Data 
 @NoArgsConstructor //빈생성자
 public class Member {
 	
@@ -28,5 +28,6 @@ public class Member {
 //@Getter
 //@Setter
 //@Data //getter, setter 동시
-//@AllArgsConstructor // 생성자
-//@RequiredArgsConstructor//불변성 유지를 위해 final 붙은 변수들의 생성자 
+//@AllArgsConstructor // constructor
+//@NoArgsConstructor //빈생성자
+//@RequiredArgsConstructor//불변성 유지를 위해 final 붙은 변수들의 constructor

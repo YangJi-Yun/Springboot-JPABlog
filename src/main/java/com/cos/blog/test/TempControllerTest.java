@@ -23,6 +23,7 @@ public class TempControllerTest {
 		return "/a.png";
 	}
 	
+	//application.yml spring부분 주석 해제
 	@GetMapping("/temp/first/jsp")
 	public String tempJsp1() {
 		return "/jspTest1.jsp";
