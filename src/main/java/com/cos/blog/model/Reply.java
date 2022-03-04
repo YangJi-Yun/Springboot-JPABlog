@@ -39,6 +39,7 @@ public class Reply {
 	@JoinColumn(name="boardId")
 	private Board board;
 	
+	
 	@ManyToOne // 여러 개의 답변을 하나의 유저가 쓸 수 있다.
 	@JoinColumn(name="userId")
 	private User user;
