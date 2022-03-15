@@ -1,8 +1,13 @@
 package com.cos.blog.test;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +27,32 @@ public class DummyControllerTest {
 	// UserRepository 인터페이스가 이미 메모리에 떠있다.
 	private UserRepository userRepository;
 	//스프링이 @RestController을 읽어서 DummyControllerTest를 메모리에 띄어줄 때는 null이다.
+	
+	// http://localhost:8000/blog/dummy/user
+	@GetMapping("/dummy/users")
+	public List<User> list(){
+		return userRepository.findAll();
+	}
+	
+	// 한 페이지당 2건의 데이터를 리턴받는다. (페이징) 
+	@GetMapping("/dummy/user")
+//	public Page<User> pageList(@PageableDefault(size=2, sort="id", direction=Sort.Direction.DESC) Pageable pageable){ //data.domain
+//		Page<User> users =userRepository.findAll(pageable);
+//		return users;
+//	}
+	
+		// 원하는 데이터만 보이게
+//	public List<User> pageList(@PageableDefault(size=2, sort="id", direction=Sort.Direction.DESC) Pageable pageable){ //data.domain
+//		List<User> users =userRepository.findAll(pageable).getContent();
+//		return users;
+//	}
+	
+	public List<User> pageList(@PageableDefault(size=2, sort="id", direction=Sort.Direction.DESC) Pageable pageable){ //data.domain
+		Page<User> paginUser =userRepository.findAll(pageable);
+		
+		List<User> users=paginUser.getContent();
+		return users;
+	}
 	
 	// {id} 주소로 파라미터를 전달받을 수 있음
 	// http://localhost:8000/blog/dummy/user/3
@@ -61,6 +92,12 @@ public class DummyControllerTest {
 //		});
 		
 		
+		// 요청 : 웹브라우저 
+		// @RestController html 파일이 아니라 data를 리턴해주는 controller -> 웹브라우저는 user 객체를 인식하지 못한다.
+		// user 객체 = 자바  object
+		// 변환 (웹브라우저가 이해할 수 있는 데이터) -> json (Gson 라이브러리)
+		// 스프링부트 -> MessageConverter가 응답시에 자동 작동
+		// 만약에 자바 object를 리턴하게 되면 MessageConverter가 Jackson 라이브러리를 호출해서 user object를 json으로 변환해서 브라우저에게 던져준다.
 		return user;
 	}
 	
