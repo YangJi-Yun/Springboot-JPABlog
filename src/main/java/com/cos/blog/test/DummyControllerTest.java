@@ -6,10 +6,12 @@ import java.util.function.Supplier;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,17 @@ public class DummyControllerTest {
 	// UserRepository 인터페이스가 이미 메모리에 떠있다.
 	private UserRepository userRepository;
 	//스프링이 @RestController을 읽어서 DummyControllerTest를 메모리에 띄어줄 때는 null이다.
+	
+	@DeleteMapping("/dummy/user/{id}")
+	public String delete(@PathVariable int id) {
+		try {
+			userRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			return "삭제에 실패하였습니다. 해당 id는 DB에 없습니다.";
+		}
+		
+		return "삭제되었습니다. id : "+id;
+	}
 	
 	@Transactional // save함수 대신 사용 
 	@PutMapping("/dummy/user/{id}") // 요청 형태가 다르기 때문에 GetMapping과 주소가 같아도 상관없다.
@@ -59,7 +72,8 @@ public class DummyControllerTest {
 //		requestUser.setUsername("ssar");
 //		userRepository.save(requestUser);
 		
-		return null;
+		//더티체킹
+		return user;
 	}
 	
 	
