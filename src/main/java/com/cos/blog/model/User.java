@@ -34,7 +34,7 @@ public class User {
 	// MySQL: auto_increment, Oracle: sequence
 	private int id; // 시퀀스, auto_increment
 	
-	@Column(nullable=false, length=30) // null이 될 수 없고 길이는 30자를 넘을 수 없다.
+	@Column(nullable=false, length=30, unique=true) // null이 될 수 없고 길이는 30자를 넘을 수 없다.
 	private String username; // 아이디
 	
 	@Column(nullable=false, length=100) // 길이를 길게 잡은 이유: 비밀번호를 해쉬로 변경해서 암호화할 예정(비밀번호 암호화)
