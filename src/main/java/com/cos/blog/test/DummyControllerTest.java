@@ -156,6 +156,5 @@ public class DummyControllerTest {
 		user.setRole(RoleType.USER);
 		userRepository.save(user);
 		return "회원가입이 완료되었습니다.";
-		
 	}
 }
